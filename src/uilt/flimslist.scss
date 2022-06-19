@@ -1,0 +1,92 @@
+
+.flims {
+  background: #fff;
+  box-sizing: border-box;
+  padding-bottom: 49px;
+
+  .nowplaying-list {
+
+    .van-list {
+      margin-left: 15px;
+
+      .van-cell {
+        display: flex;
+        flex-direction: row;
+        padding: 15px 15px 15px 0;
+
+        .nowing-img {
+          float: left;
+          width: 66px;
+          height: 93px;
+
+          img {
+            width: 100%;
+            height: 100%;
+          }
+
+        }
+
+        .nowing-parer {
+          width: 229px;
+          height: 82px;
+          float: left;
+          padding: 0 10px;
+
+          .uname-item {
+            width: 209px;
+            height: 22px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+
+            .uname {
+              width: 209px;
+              height: 22px;
+              color: #191a1b;
+              font-size: 16px;
+              margin-right: 5px;
+            }
+
+            .item {
+              width: 20px;
+              height: 14px;
+              background: #d2d6dc;
+              padding: 0 2px;
+              font-size: 12px;
+              color: #fff;
+              border-radius: 2px;
+            }
+
+          }
+
+          .poorer {
+            color: #797d82;
+            font-size: 13px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            width: 209px;
+            height: 21px;
+
+            .poorer-one {
+              width: 236px;
+              height: 16.8px;
+            }
+
+            .grade {
+              color: #ffb231;
+              font-size: 14px;
+              margin-left: 4px;
+            }
+
+          }
+
+          .poorer:nth-child(3) {
+            height: 19px;
+          }
+
+        }
+      }
+    }
+  }
+}
