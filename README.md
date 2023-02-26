@@ -1,7 +1,7 @@
 # vue3 + ts + vite
 The project takes the official website of blockbuster films as the standard for imitation
 
-For detailed project presentation, please visit (*maizuo.lxlgjy.top*)
+For detailed project presentation, please visit (*maizuo.lxlgjy.top*)-(失效)
 
 # Project introduction
 Modules completed so far: 
