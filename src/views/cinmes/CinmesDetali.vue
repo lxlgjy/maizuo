@@ -1,13 +1,6 @@
 <template>
   <div id="cinmesAll">
-    <van-nav-bar
-      @click-left="onClickLeft"
-      :fixed="true"
-      :placeholder="true"
-      :z-index="100"
-      :title="title"
-      class="top"
-    >
+    <van-nav-bar @click-left="onClickLeft" :fixed="true" :placeholder="true" :z-index="100" :title="title" class="top">
       <template #left>
         <van-icon name="arrow-left" size="19" color="black" />
       </template>
@@ -19,19 +12,9 @@
       <li v-for="item in data.services">{{ item.name }}</li>
       <p></p>
     </div>
-    <van-popup
-      v-model:show="topShow"
-      position="top"
-      :style="{ height: '100%' }"
-    >
-      <van-nav-bar
-        @click-left="onClickLeftShow"
-        :fixed="true"
-        :placeholder="true"
-        :z-index="100"
-        :title="title"
-        class="top"
-      >
+    <van-popup v-model:show="topShow" position="top" :style="{ height: '100%' }">
+      <van-nav-bar @click-left="onClickLeftShow" :fixed="true" :placeholder="true" :z-index="100" :title="title"
+        class="top">
         <template #left>
           <van-icon name="cross" size="19" color="black" />
         </template>
@@ -54,32 +37,25 @@
         <van-icon name="phone-o" color="black" size="20" />
       </template>
     </van-nav-bar>
-    <div class="datapages" v-if="data.cinmesList.length">
+    <div class="datapages" v-if="data.cinmesList.length" id="swiperCinme">
       <!-- Image background blur -->
       <div class="flimes-swiper-o">
         <div class="imgbgc"></div>
       </div>
       <!-- Picture rotation -->
-      <div class="flimes-swiper">
-        <div class="swiper-container swiperlist" style="height: 130px">
-          <div class="swiper-wrapper">
-            <div
-              class="swiper-slide"
-              v-for="(item, index) in data.cinmesList"
-              :key="item['filmId']"
-              style="width: 90px"
-            >
-              <img :src="item['poster']" alt="" width="72" height="104" />
-            </div>
-          </div>
-        </div>
+      <div class="flimes-swiper" v-if="data.cinmesList">
+        <van-swipe :loop="false" :width="swiperWidth" @change="setSwiperBackground($event)">
+          <van-swipe-item v-for="(item, index) in data.cinmesList" :key="item['filmId']" class="swiperfirst">
+            <img :src="item['poster']" alt="" width="72" height="104" :id="SwiperIndex === index ? 'swiperSelect' : ''" />
+          </van-swipe-item>
+        </van-swipe>
         <div class="flimes-swiper-toggle">
           <img
             src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACgAAAAUCAYAAAD/Rn+7AAAAAXNSR0IArs4c6QAAAH1JREFUSA3N0EsKgDAMBNB4cu3JYyJ1oRTtZ/IZGLIbHiEChpkPLXASN1Vxcq7kQgpJP/dODqSoWrgbG4v8wcUiO3ExyEGcL3IS54NcxNkiQTgbJBiHRRrhMEhj3BrSCTeHdMaNIYNwfchg3DcyCa6NTIZ7IDfFEdEuzZhyAkTR3AC3/R6VAAAAAElFTkSuQmCC"
-            alt=""
-          />
+            alt="" />
         </div>
       </div>
+
       <!-- Film details display -->
       <div class="flimes-title" @click="handerDetali">
         <div class="flmes-one">
@@ -96,30 +72,13 @@
         </div>
         <img
           src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAYCAYAAADOMhxqAAAAAXNSR0IArs4c6QAAAhJJREFUOBGFU79PFEEUnh932Liz1xDAMezRaWFBrlEaw8XORBNjSAw0hIbWzmBri38BIdIZFRIKEyCBmGhMLC38EQu9u9wASkNuz0S4g+F7w+zGhT19xc778X1vZr55K7XWDwMVLgehCuNW6w37j0mAX1lrNbPsZqhK3Thuvf0XR15UgQbgBoEss+MqKH0F6VMvkrg0OPiIc7bpAZxx+0zryDXII3FKlsvl0sFh5z3cqx60VyzI641G47uP00WQV6vV9vuKhdtwf/lKf7d79Joa+ThdHIGier3+Q3B2l3P+h2LL2JXDTnelUqkUKU5MJg6tcRw3lQq+AXwfIR13pP27fRn5VaqTZQiUQPGzCsMDbHGLYthooFSnHcdO7nMEQuAB34E0DNIoxbBqIrdT6TSX/dLZd3Z/ruFRq1Shu3Emqz0JBDorN0gfU5UIkGfomGnak0BHgqzLJC81Oj2Snc29tAMIsWAtu+d3tXijSWPMRu4OQ1rPATztwYwLPgfwS9coSSar1sMTx/boOWJ3doAXt5vNmaSe2YGm1LLjpRTM+dbQwMBsAqY1VSCKohFc8gNy/R7w5UJfcYwG08ducZcmvQHeQibyxT1M7zgGcvdvMPkikQ+++xdIPihyh6b3LJhiKURhHs//wBchn5wyprmeB6acwH88kRY5e2xM40Ua5zgS82/xjNcg39MdY57kYDKpEyF1uKDTCa4lAAAAAElFTkSuQmCC"
-          alt=""
-          width="4"
-          height="8"
-        />
+          alt="" width="4" height="8" />
       </div>
       <!-- Movie playback time, purchase time-->
-      <van-tabs
-        v-model:active="active"
-        @rendered="firstLoading(active)"
-        :lazy-render="true"
-        @click-tab="ClickJump(active)"
-        :swipeable="true"
-        :ellipsis="false"
-      >
-        <van-tab
-          v-for="index in data.showDate"
-          :title="shopListTime(index)"
-          style="overflow-y: scroll; height: auto"
-        >
-          <li
-            v-for="item in data.showTimeData"
-            class="showTime-All"
-            v-if="data.showTimeData.length"
-          >
+      <van-tabs v-model:active="active" @rendered="firstLoading(active)" :lazy-render="true"
+        @click-tab="ClickJump(active)" :swipeable="true" :ellipsis="false">
+        <van-tab v-for="index in data.showDate" :title="shopListTime(index)" style="overflow-y: scroll; height: auto">
+          <li v-for="item in data.showTimeData" class="showTime-All" v-if="data.showTimeData.length">
             <div class="left">
               <div class="start-on">
                 {{ shopListTime(item["showAt"], true) }}
@@ -140,20 +99,17 @@
             </div>
           </li>
           <div v-else class="hideCinmes">
-            <img
-              src="https://assets.maizuo.com/h5/v5/public/app/img/emptyFilmList.4e4721ad.png"
-              alt=""
-            />
+            <img src="https://assets.maizuo.com/h5/v5/public/app/img/emptyFilmList.4e4721ad.png" alt="" />
             <div>暂无场次</div>
           </div>
         </van-tab>
       </van-tabs>
     </div>
+
+
+
     <div v-else class="hideCinmes">
-      <img
-        src="https://assets.maizuo.com/h5/v5/public/app/img/emptyFilmList.4e4721ad.png"
-        alt=""
-      />
+      <img src="https://assets.maizuo.com/h5/v5/public/app/img/emptyFilmList.4e4721ad.png" alt="" />
       <div>暂无场次</div>
     </div>
   </div>
@@ -164,14 +120,15 @@ import { onMounted, reactive, nextTick, ref, onUnmounted } from "vue";
 import { useRouter } from "vue-router";
 import { useMainStore } from "../../store";
 import { getCinmesDetaliList, shwoTimelist } from "../../uilt/Filems-axim";
-import Swiper from "swiper";
 import { shopListTime } from "../../uilt/Time";
-// import Swiper styles
-import "swiper/css";
 
 let active = ref(0);
 
 let title = ref("");
+
+const SwiperIndex = ref(0)
+
+const swiperWidth = ref(0)
 
 let topShow = ref(false);
 
@@ -196,6 +153,9 @@ const mainStore = useMainStore();
 
 onMounted(async () => {
   let cinmesId = mainStore.cinmesDetaliList as any;
+  
+  
+
 
   let CinemaInformation = "mall.film-ticket.cinema.info";
   let Movieinformation = "mall.film-ticket.film.cinema-show-film";
@@ -220,24 +180,16 @@ onMounted(async () => {
 
   //swiper
   nextTick(async () => {
-    var swiper = new Swiper(".swiper-container", {
-      slidesPerView: 3,
-      spaceBetween: 15,
-      centeredSlides: true,
-      loop: false,
-      on: {
-        slideChangeTransitionStart: function () {
-          setSwiperBackground(this);
-        },
-        init: function () {
-          // After initialization, no transition end is added, no bugs are found in the operation, and no deep thinking is given to the problems caused by this
 
-          setSwiperBackground(this);
-        },
-      },
-    });
     getScorll();
+    setSwiperBackground(0)
+    
   });
+  let Width = document.querySelector('#cinmesAll') as HTMLDivElement
+    swiperWidth.value = Width.offsetWidth
+
+
+
 });
 
 onUnmounted(() => {
@@ -248,18 +200,18 @@ onUnmounted(() => {
 //Add style attribute to DOM element
 const setSwiperBackground = (index: any) => {
   let imgbgc = document.querySelector(".imgbgc") as HTMLDivElement;
-  imgbgc.style.backgroundImage = `url(${
-    data.cinmesList[index.activeIndex]["poster"]
-  })`;
-  data.flimesName = data.cinmesList[index.activeIndex]["name"];
-  data.flimesGrade = data.cinmesList[index.activeIndex]["grade"];
-  data.flimesCategory = data.cinmesList[index.activeIndex]["category"];
-  data.flimesRuntime = data.cinmesList[index.activeIndex]["runtime"];
-  data.flimesDirector = data.cinmesList[index.activeIndex]["director"];
-  data.showDate = data.cinmesList[index.activeIndex]["showDate"];
-  data.flimesId = data.cinmesList[index.activeIndex]["filmId"];
+  imgbgc.style.backgroundImage = `url(${data.cinmesList[index]["poster"]
+    })`;
+  data.flimesName = data.cinmesList[index]["name"];
+  data.flimesGrade = data.cinmesList[index]["grade"];
+  data.flimesCategory = data.cinmesList[index]["category"];
+  data.flimesRuntime = data.cinmesList[index]["runtime"];
+  data.flimesDirector = data.cinmesList[index]["director"];
+  data.showDate = data.cinmesList[index]["showDate"];
+  data.flimesId = data.cinmesList[index]["filmId"];
   //Call function assignment and processing
-  getActores(data.cinmesList[index.activeIndex]["actors"]);
+  getActores(data.cinmesList[index]["actors"]);
+  SwiperIndex.value = index
 };
 
 const getActores = (list: any) => {
@@ -293,6 +245,7 @@ const firstLoading = async (index: number) => {
     data.showTimeData = shwoTimeData;
   }
 };
+
 
 const ClickJump = async (index: number) => {
   let dataParems = data.showDate[index];
@@ -352,39 +305,52 @@ const getScorll = () => {
 };
 </script>
 <style lang="scss" scoped>
+#swiperSelect {
+  transform: scale(1.5);
+  transition-duration: 500ms;
+}
+
 .hideCinmes {
   height: 180px;
   padding: 40px 0 44px;
   text-align: center;
+
   img {
     width: 70px;
     height: 70px;
   }
+
   div {
     color: #bdc0c5;
     font-size: 14px;
   }
 }
+
 div {
   box-sizing: border-box;
 }
+
 #cinmesAll {
   background-color: #fff;
 }
+
 .van-nav-bar {
   :deep(.van-nav-bar__title) {
     font-size: var(--van-font-size-sm) !important;
   }
 }
+
 .datapages {
   position: relative;
   box-sizing: border-box;
+
   .imgbgc {
     height: 100%;
     width: 100%;
     filter: blur(30px);
     -webkit-filter: blur(30px);
   }
+
   .flimes-swiper-toggle {
     position: relative;
     display: flex;
@@ -393,21 +359,25 @@ div {
     -webkit-box-pack: center;
     justify-content: center;
     top: 5px;
+
     img {
       width: 20px;
       height: 10px;
       aspect-ratio: auto 20 / 10;
     }
   }
+
   .flimes-title {
     height: 80px;
     padding: 15px 0;
     box-sizing: border-box;
     position: relative;
+
     .flmes-one {
       text-align: center;
       margin-bottom: 10px;
     }
+
     .flimes-secoed {
       color: #797d82;
       height: 18px;
@@ -417,6 +387,7 @@ div {
       white-space: nowrap;
       padding: 0 12%;
     }
+
     img {
       position: absolute;
       right: 15px;
@@ -424,11 +395,13 @@ div {
       top: 0;
     }
   }
+
   .showTime-All {
     height: 74px;
     position: relative;
     padding: 15px 15px;
     box-sizing: border-box;
+
     &::before {
       content: "";
       position: absolute;
@@ -440,22 +413,27 @@ div {
       color: #ededed;
       transform: scaleY(0.5);
     }
+
     .left {
       float: left;
       width: 84px;
+
       .start-on {
         color: #191a1b;
         font-size: 15px;
       }
+
       .start-end {
         color: #797d82;
         font-size: 13px;
         margin-top: 2px;
       }
     }
+
     .module {
       float: left;
       width: calc(100% - 210px);
+
       .module-on {
         color: #191a1b;
         font-size: 15px;
@@ -463,6 +441,7 @@ div {
         white-space: nowrap;
         text-overflow: ellipsis;
       }
+
       .module-end {
         color: #797d82;
         font-size: 13px;
@@ -471,11 +450,13 @@ div {
         text-overflow: ellipsis;
       }
     }
+
     .right {
       float: right;
       color: #ff5f16;
       padding: 10px 0;
       line-height: 25px;
+
       .right-on {
         float: right;
         height: 25px;
@@ -483,6 +464,7 @@ div {
         width: 50px;
         position: relative;
         text-align: center;
+
         &::after {
           content: "";
           border: 1px solid #ff5f16;
@@ -504,36 +486,27 @@ div {
     }
   }
 }
+
 .swiper-slide-active,
 .swiper-slide-duplicate-active {
   transform: scale(1.3) !important;
 }
-.swiper-slide {
-  text-align: center;
-  font-size: 18px;
 
-  /* Center slide text vertically */
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
+.swiper-wrapper {
   display: flex;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  -webkit-justify-content: center;
-  justify-content: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  -webkit-align-items: center;
-  align-items: center;
-  transition: 300ms;
-  transform: scale(1);
 }
+
 
 .flimes-swiper {
   position: relative;
   height: 160px;
   padding: 15px 0;
   box-sizing: border-box;
+
+  .swiperfirst {
+    text-align: center;
+  }
+
   .swiperlist {
     // justify-content: center;
     overflow: hidden;
@@ -541,6 +514,7 @@ div {
     margin-left: auto;
   }
 }
+
 .flimes-swiper-o {
   position: absolute;
   top: 0;
@@ -555,6 +529,7 @@ div {
   height: 44px;
   padding: 0 15px;
   line-height: 44px;
+
   p {
     font-size: 17px;
     text-align: center;
@@ -573,11 +548,13 @@ div {
   padding: 5px 0 15px;
   box-sizing: border-box;
   justify-content: center;
+
   li {
     position: relative;
     padding: 0 6px;
     margin: 0 2.5px;
     font-size: 10px;
+
     &::after {
       content: "";
       transform: scale(0.5);
@@ -590,8 +567,10 @@ div {
       border-radius: 1px;
     }
   }
+
   p {
     margin-left: 5px;
+
     &::after {
       content: "";
       width: 6px;
@@ -608,10 +587,12 @@ div {
   padding: 0 30px;
   box-sizing: border-box;
   font-size: 12px;
+
   .topHideli {
     margin-top: 20px;
     color: #797d82;
   }
+
   .topHideLable {
     position: relative;
     display: inline;
@@ -622,6 +603,7 @@ div {
     margin: 0 2.5px;
     font-size: 10px;
     color: #ffb232;
+
     &::after {
       content: "";
       transform: scale(0.5);
@@ -634,6 +616,7 @@ div {
       border-radius: 1px;
     }
   }
+
   .topHideRight {
     padding: 0 0 0 70px;
     line-height: 15px;
