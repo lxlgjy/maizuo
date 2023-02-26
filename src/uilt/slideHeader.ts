@@ -6,10 +6,12 @@ export const slideHeader = () => {
 
   const router = useRouter()
   //获取不到window
-  if (router.currentRoute._rawValue.href === '/Filems/Cheamlist') {
+  // _rawValue 无法识别 router.currentRoute._rawValue.href
+  
+  if (window.history.state.current=== '/Filems/Cheamlist') {
     hus.style.left = 188 + 'px'
     Cheamlist.style.color = '#ff5f16'
-  } else if (router.currentRoute._rawValue.href === '/Filems/Nowpying') {
+  } else if (window.history.state.current === '/Filems/Nowpying') {
     hus.style.left = 0 + 'px'
     Nowpying.style.color = '#ff5f16'
   }
@@ -21,7 +23,6 @@ export const slideHeader = () => {
   }
 
   Cheamlist.onclick = function () {
-    // console.log(11)
     hus.style.left = 188 + 'px'
     Cheamlist.style.color = '#ff5f16'
     Nowpying.style.color = '#000'
