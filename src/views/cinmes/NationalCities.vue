@@ -21,10 +21,10 @@ import { Filter } from "../../uilt/Filter";
 import { useMainStore } from "../../store";
 import { useRouter } from "vue-router";
 import { Toast } from "vant";
-import { computed } from "@vue/reactivity";
+import { computed } from "vue";
 
 const mainStore = useMainStore();
-const router = useRouter();
+const router = useRouter(); 
 
 const data = reactive({
   NationalCitys: [],

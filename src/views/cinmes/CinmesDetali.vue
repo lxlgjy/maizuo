@@ -309,7 +309,7 @@ const handerDetali = () => {
   router.push({
     name: "Dealt",
     params: {
-      id: mainStore.detaliId,
+      id: data.flimesId,
     },
   });
 };

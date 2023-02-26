@@ -35,9 +35,6 @@ const ss = (cinmesId:string) => {
   mainStore.getCinmesList(cinmesId)
   router.push({
     name:'CinmesDetali',
-    params:{
-      cinmesId
-    }
   })
   
 }

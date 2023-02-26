@@ -6,7 +6,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import TableTop from "./components/app/Tabletop.vue";
+import TableTop from "./components/app/tableTop.vue";
 </script>
 
 <style>

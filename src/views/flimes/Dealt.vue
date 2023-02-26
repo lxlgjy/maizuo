@@ -123,6 +123,7 @@ const router = useRouter()
 
 // footer hide And show
 mainStore.hide()
+
 onUnmounted(() => {
   mainStore.show()
 })
