@@ -20,7 +20,7 @@ import { http } from "../../uilt/http";
 import { Filter } from "../../uilt/Filter";
 import { useMainStore } from "../../store";
 import { useRouter } from "vue-router";
-import { Toast } from "vant";
+import { showToast ,setToastDefaultOptions } from "vant";
 import { computed } from "vue";
 
 const mainStore = useMainStore();
@@ -56,8 +56,8 @@ const handerclickCityName = (name: string, id: string) => {
 };
 
 const handerchange = (index: string) => {
-  Toast.setDefaultOptions({ duration: 500 });
-  Toast(index);
+  setToastDefaultOptions({ duration: 500 });
+  showToast(index);
 };
 
 const computlist = computed(() => {

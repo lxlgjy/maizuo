@@ -47,18 +47,16 @@
           </div>
           <div class="actors-img">
             <ul>
-              <dealt-swiper v-if="detaliList['actors'].length" :free-mode="detaliListopacion.freeMode"
-                :loop="detaliListopacion.loop" :slides-per-view="detaliListopacion.slidesPerView" name="actors">
-                <li v-for="(item, index) in detaliList['actors']" :key="index" class="swiper-slide swiperImg"
-                  style="width:85px;min-width: 85px;">
+              <van-swipe :loop="false" :width="100" :show-indicators="false">
+                <van-swipe-item v-for="(item, index) in detaliList['actors']" :key="index"
+                  class="swiper-slide swiperImg li">
                   <div class="avatarAddress">
                     <img :src="item['avatarAddress']" alt="">
                   </div>
                   <span>{{ item['name'] }}</span>
                   <span>{{ item['role'] }}</span>
-
-                </li>
-              </dealt-swiper>
+                </van-swipe-item>
+              </van-swipe>
             </ul>
           </div>
         </div>
@@ -69,15 +67,13 @@
           </div>
           <div class="actors-img" style="height: 115px">
             <ul v-if="detaliList['photos']">
-              <dealt-swiper :free-mode="detaliListopacion.freeMode" :loop="detaliListopacion.loop"
-                :slides-per-view="detaliListopacion.StillPerView" name="photos">
-                <li v-for="(item, index) in detaliList['photos']" :key="index" class="swiper-slide swiperImg"
-                  style="width:150px;min-width: 150px;">
-                  <div class="avatarAddress" style="width: 150px; height: 100px;">
+              <van-swipe :loop="false" :width="170" :height="250" :show-indicators="false">
+                <van-swipe-item v-for="(item, index) in detaliList['photos']" :key="index" class="swiper-slide swiperImg li">
+                  <div class="avatarAddress" style="width:150px;height:100px">
                     <img :src="item" alt="" @click="handerimg(index, detaliList)">
                   </div>
-                </li>
-              </dealt-swiper>
+                </van-swipe-item>
+              </van-swipe>
             </ul>
             <div v-else class="none-actors">
               暂无电影剧照
@@ -94,24 +90,16 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, reactive, ref , onUnmounted} from 'vue';
+import { onMounted, reactive, ref, onUnmounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useMainStore } from '../../store';
 import { http } from '../../uilt/http'
 import { time } from '../../uilt/Time'
 import { slide } from '../../uilt/slide'
-import dealtSwiper from '../../components/flims/FlimSwiper.vue'
-import { ImagePreview } from 'vant'
+import { showImagePreview } from 'vant'
 
 //data
-const detaliListopacion = reactive({
-  detail: null,
-  loop: false,
-  freeMode: true,
-  slidesPerView: 3.9,
-  StillPerView: 2.3,
-  activeName: '1',
-})
+
 
 let detaliList = ref() as any
 let detailFileName = ref('')
@@ -146,16 +134,14 @@ onMounted(() => {
 
 // 格式化时间
 const TimeSeion = (times: number) => {
-  return time(times,true)
+  return time(times, true)
 }
 
 //Picture preview
-const handerimg = (index: number, els:any) => {
-  ImagePreview({
-    images:els.photos,
+const handerimg = (index: number, els: any) => {
+  showImagePreview({
+    images: els.photos,
     startPosition: index,
-    closeable: true,
-    closeIconPosition: 'top-left'
   })
 }
 
@@ -170,18 +156,14 @@ const callback = () => {
 
 //
 const TicketPurchaseInterface = () => {
-  let paremsId = route.params.id as  string
+  let paremsId = route.params.id as string
   let paremsName = detaliList.value['name']
-    //pinia Persistence
+  //pinia Persistence
   mainStore.getdetaliId(paremsId)
   mainStore.getdetaliName(paremsName)
 
   router.push({
-    name:'Shopping',
-    params:{
-      detailId:paremsId,
-      detailName:paremsName
-    }
+    name: 'Shopping',
   })
 }
 
@@ -194,7 +176,7 @@ const vScroll = {
     text_scoll.style.display = 'none'
     window.onscroll = () => {
       const scoll = document.documentElement.scrollTop || document.body.scrollTop
-      
+
       if (scoll > 50) {
         text_scoll.style.position = 'fixed'
         text_scoll.style.display = 'block'
@@ -392,7 +374,7 @@ body {
         width: 100%;
         position: relative;
 
-        li {
+        .li {
           position: relative;
 
           .avatarAddress {
